@@ -9,13 +9,47 @@
 import UIKit
 import ImageIO
 
-extension UIImage {
+public class ZGIFImage {
+    
+    /// set image with name
+    ///
+    /// - Parameter name: image name
+    /// - Returns: UIImage
+    public class func image(name: String) -> UIImage? {
+        return UIImage(named: name)
+    }
+    
+    /// load image with url , also gif url
+    ///
+    /// - Parameter url: image url
+    /// - Returns: UIImage
+    public class func image(url: URL) -> UIImage? {
+        guard let imageData = try? Data(contentsOf: url) else { return nil }
+        let image = ZGIFImage.image(data: imageData)
+        return image
+    }
+    
+    /// set image with data
+    ///
+    /// - Parameter data: image data
+    /// - Returns: UIImage
+    public class func image(data: Data) -> UIImage? {
+        guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
+        let totalCount = CGImageSourceGetCount(imageSource)
+        var image: UIImage?
+        if totalCount == 1 {
+            image = UIImage(data: data)
+        } else {
+            image = ZGIFImage.gif(data: data)
+        }
+        return image
+    }
     
     /// load GIF
     ///
     /// - Parameter name: gif's name, include `.gif` or not
     /// - Returns: UIImage
-    class func gif(name: String) -> UIImage? {
+    public class func gif(name: String) -> UIImage? {
         var nameStr = name
         if nameStr.contains(".gif") {
             let temp = nameStr as NSString
@@ -30,7 +64,7 @@ extension UIImage {
     ///
     /// - Parameter data: data
     /// - Returns: UIImage
-    class func gif(data: Data) -> UIImage? {
+    public class func gif(data: Data) -> UIImage? {
         guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
         return gifImageWithSource(imageSource)
     }

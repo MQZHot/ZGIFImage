@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
 
 s.name         = "ZGIFImage"                              
-s.version      = "0.0.1"                                   
-s.summary      = "Extension of UIImage, Load gif by gif name or Data"
+s.version      = "0.0.2"                                   
+s.summary      = "Load gif by gif name or Data or URL"
 s.homepage     = "https://github.com/MQZHot/ZGIFImage"
 s.author       = { "mqz" => "mqz1228@163.com" }     
 s.platform     = :ios, "8.0"                     
